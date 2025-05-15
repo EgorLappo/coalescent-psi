@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 import polars as pl
 from tqdm import tqdm
 import random

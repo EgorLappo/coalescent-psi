@@ -1,12 +1,13 @@
 import numpy as np
 
-# this file contains "full" expressions 
+# this file contains "full" expressions
 # for the instantaneous bottleneck model,
 # without any mathematical simplification.
 # these functions are used in plotting
 
 
 # TOPOLOGY PROBABILITIES
+
 
 def p_alpha(s, t, nA, nB):
     nA = 2 * nA
@@ -188,6 +189,7 @@ def p21(s, t, nA, nB, nC):
 
 
 # psi
+
 
 def epsi(s, t, nA, nB, nC):
     return (p21(s, t, nA, nB, nC) - p12(s, t, nA, nB, nC)) / (

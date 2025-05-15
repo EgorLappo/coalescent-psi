@@ -2,19 +2,20 @@
 import os
 import random
 from tqdm import tqdm
-import numpy as np
 import pandas as pd
 from Bio import AlignIO
 from collections import defaultdict
 
 values = defaultdict(dict)
 
-fids = set() 
+fids = set()
 
-for fragment in [f'data/fragments_aligned/{f}' for f in os.listdir("data/fragments_aligned")]:
+for fragment in [
+    f"data/fragments_aligned/{f}" for f in os.listdir("data/fragments_aligned")
+]:
     seqs = AlignIO.read(fragment, "fasta")
 
-    fid = int(fragment.split('/')[-1].split('.')[0])
+    fid = int(fragment.split("/")[-1].split(".")[0])
     fids.add(fid)
 
     for s in seqs:
@@ -28,7 +29,7 @@ dfgs = []
 
 sim_fragments = values["SIM"]
 for fid in fids:
-    rows = [] 
+    rows = []
 
     for i in range(len(sim_fragments[fid])):
         # row = {k: values[k][fid][i] for k in values.keys()}
@@ -36,7 +37,7 @@ for fid in fids:
         for k in values.keys():
             if fid in values[k]:
                 row[k] = values[k][fid][i]
-        row["fragment_id"]= fid
+        row["fragment_id"] = fid
         row["site_id"] = i
         rows.append(row)
 
@@ -45,21 +46,19 @@ for fid in fids:
 
 dg = pd.concat(dfgs)
 
-dg.to_parquet('data/sites.parquet')
+dg.to_parquet("data/sites.parquet")
 
-boots = [] 
+boots = []
 
-fragments = list(dg['fragment_id'].unique())
+fragments = list(dg["fragment_id"].unique())
 for i in tqdm(range(1000), total=1000):
     boot_fragments = random.sample(fragments, len(fragments))
 
     for frag in boot_fragments:
         dfrag = dg.query("fragment_id == @frag").copy()
-        dfrag['boot'] = i
+        dfrag["boot"] = i
         boots.append(dfrag)
 
 boots = pd.concat(boots)
 
 boots.to_parquet("data/sites_boot.parquet", index=False)
-        
-    

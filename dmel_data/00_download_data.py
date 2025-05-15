@@ -8,7 +8,6 @@ from tqdm import tqdm
 #     * EMBL: AJ568984 to AJ571588,  AM000058 to AM003900
 
 
-
 if __name__ == "__main__":
     os.makedirs("data/embl", exist_ok=True)
 
@@ -25,4 +24,3 @@ if __name__ == "__main__":
         filename = f"data/embl/{eid}.embl"
         with open(f"data/embl/{eid}.embl", "w") as f:
             f.write(response.text)
-
