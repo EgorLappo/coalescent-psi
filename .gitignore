@@ -1,0 +1,7 @@
+# pixi environments
+.pixi
+*.egg-info
+
+.ruff_cache
+.DS_Store
+__pycache__
